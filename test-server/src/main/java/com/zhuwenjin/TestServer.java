@@ -15,11 +15,9 @@ public class TestServer {
 
     public static void main(String[] args) {
         HelloService helloService = new HelloServiceImpl();
-        IServiceRegistry registry = new DefaultServiceRegistry();
-        registry.register(helloService);
-        RpcServer server = new RpcServer();
+        RpcServer server = new RpcServer("127.0.0.1", 9999);
         server.setSerializer(new ProtobufSerializer());
-        server.start(9999);
+        server.publishService(helloService, HelloService.class);
     }
 
 }

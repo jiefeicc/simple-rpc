@@ -11,8 +11,6 @@ public interface IRpcServer {
 
     void start();
 
-    void start(int port);
-
     void setSerializer(CommonSerializer serializer);
 
     <T> void publishService(T service, Class<T> serviceClass);

@@ -33,9 +33,7 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequest msg) throws Exception {
         try {
             logger.info("服务器接收到请求: {}", msg);
-            String interfaceName = msg.getInterfaceName();
-            Object service = serviceRegistry.getService(interfaceName);
-            Object result = requestHandler.handle(msg, service);
+            Object result = requestHandler.handle(msg);
             ChannelFuture future = ctx.writeAndFlush(RpcResponse.success(result, msg.getRequestId()));
             future.addListener(ChannelFutureListener.CLOSE);
         } finally {

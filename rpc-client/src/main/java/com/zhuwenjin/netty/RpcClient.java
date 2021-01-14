@@ -54,7 +54,8 @@ public class RpcClient implements IRpcClient {
         }
         AtomicReference<Object> result = new AtomicReference<>(null);
         try {
-            Channel channel = ChannelProvider.get(new InetSocketAddress("127.0.0.1", 9999), serializer);
+            InetSocketAddress inetSocketAddress = izkserviceDiscovery.lookupService(rpcRequest.getInterfaceName());
+            Channel channel = ChannelProvider.get(inetSocketAddress, serializer);
             if(channel.isActive()) {
                 channel.writeAndFlush(rpcRequest).addListener(future1 -> {
                     if (future1.isSuccess()) {

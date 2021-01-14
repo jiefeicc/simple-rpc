@@ -12,7 +12,7 @@ import com.zhuwenjin.serializer.ProtobufSerializer;
 public class TestClient {
 
     public static void main(String[] args) {
-        IRpcClient client = new RpcClient();
+        RpcClient client = new RpcClient();
         client.setSerializer(new ProtobufSerializer());
         RpcClientProxy rpcClientProxy = new RpcClientProxy(client);
         HelloService helloService = rpcClientProxy.getProxy(HelloService.class);

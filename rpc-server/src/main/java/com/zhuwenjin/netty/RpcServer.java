@@ -20,7 +20,7 @@ import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+import java.net.InetSocketAddress;
 
 
 /**
@@ -31,14 +31,23 @@ import org.slf4j.LoggerFactory;
 public class RpcServer implements IRpcServer {
     private static final Logger logger = LoggerFactory.getLogger(RpcServer.class);
 
+    private final String host;
+    private final int port;
+
+    private final IzkServiceRegistry izkserviceRegistry;
+    private final ServiceProvider serviceProvider;
+
     private CommonSerializer serializer;
 
+    public RpcServer(String host, int port) {
+        this.host = host;
+        this.port = port;
+        izkserviceRegistry = new ZkServiceRegistry();
+        serviceProvider = new ServiceProviderImpl();
+    }
+
     @Override
-    public void start(int port) {
-        if(serializer == null) {
-            logger.error("未设置序列化器");
-            throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
-        }
+    public void start() {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -59,7 +68,7 @@ public class RpcServer implements IRpcServer {
                             pipeline.addLast(new RpcServerHandler());
                         }
                     });
-            ChannelFuture future = serverBootstrap.bind(port).sync();
+            ChannelFuture future = serverBootstrap.bind(host, port).sync();
             future.channel().closeFuture().sync();
 
         } catch (InterruptedException e) {
@@ -71,18 +80,19 @@ public class RpcServer implements IRpcServer {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void setSerializer(CommonSerializer serializer) {
         this.serializer = serializer;
     }
 
     @Override
     public <T> void publishService(T service, Class<T> serviceClass) {
-
+        if(serializer == null) {
+            logger.error("未设置序列化器");
+            throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
+        }
+        serviceProvider.addServiceProvider(service, serviceClass);
+        izkserviceRegistry.registerService(serviceClass.getCanonicalName(), new InetSocketAddress(host, port));
+        start();
     }
 
 }
