@@ -5,6 +5,7 @@ import com.zhuwenjin.codec.CommonDecoder;
 import com.zhuwenjin.codec.CommonEncoder;
 import com.zhuwenjin.enumeration.RpcError;
 import com.zhuwenjin.exception.RpcException;
+import com.zhuwenjin.hook.ShutdownHook;
 import com.zhuwenjin.provider.ServiceProvider;
 import com.zhuwenjin.provider.ServiceProviderImpl;
 import com.zhuwenjin.registry.IzkServiceRegistry;
@@ -69,6 +70,7 @@ public class RpcServer implements IRpcServer {
                         }
                     });
             ChannelFuture future = serverBootstrap.bind(host, port).sync();
+            ShutdownHook.getShutdownHook().addClearAllHook(new InetSocketAddress(host,port));
             future.channel().closeFuture().sync();
 
         } catch (InterruptedException e) {

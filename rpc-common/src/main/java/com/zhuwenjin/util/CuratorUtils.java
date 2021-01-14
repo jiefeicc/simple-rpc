@@ -88,16 +88,14 @@ public final class CuratorUtils {
     /**
      * Empty the registry of data
      */
-    public static void clearRegistry(CuratorFramework zkClient, InetSocketAddress inetSocketAddress) {
-        REGISTERED_PATH_SET.stream().parallel().forEach(p -> {
-            try {
-                if (p.endsWith(inetSocketAddress.toString())) {
-                    zkClient.delete().forPath(p);
-                }
-            } catch (Exception e) {
-                log.error("clear registry for path [{}] fail", p);
-            }
-        });
+    public static void clearRegistry(InetSocketAddress inetSocketAddress) {
+        CuratorFramework zkClient = CuratorUtils.getZkClient();
+        try {
+            zkClient.delete().deletingChildrenIfNeeded().forPath(ZK_REGISTER_ROOT_PATH);
+            System.out.println("Server端关闭时，注销所有服务");
+        } catch (Exception e) {
+            log.error("clear registry for path [{}] fail", ZK_REGISTER_ROOT_PATH);
+        }
         log.info("All registered services on the server are cleared:[{}]", REGISTERED_PATH_SET.toString());
     }
 
