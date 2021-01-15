@@ -1,9 +1,7 @@
 package com.zhuwenjin;
 
 import com.zhuwenjin.netty.RpcServer;
-import com.zhuwenjin.registry.DefaultServiceRegistry;
-import com.zhuwenjin.registry.IServiceRegistry;
-import com.zhuwenjin.serializer.ProtobufSerializer;
+import com.zhuwenjin.serializer.CommonSerializer;
 
 
 /**
@@ -15,8 +13,7 @@ public class TestServer {
 
     public static void main(String[] args) {
         HelloService helloService = new HelloServiceImpl();
-        RpcServer server = new RpcServer("127.0.0.1", 9999);
-        server.setSerializer(new ProtobufSerializer());
+        RpcServer server = new RpcServer("127.0.0.1", 9999, CommonSerializer.PROTOBUF_SERIALIZER);
         server.publishService(helloService, HelloService.class);
     }
 

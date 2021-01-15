@@ -10,8 +10,8 @@ import com.zhuwenjin.serializer.CommonSerializer;
  */
 public interface IRpcClient {
 
-    Object sendRequest(RpcRequest rpcRequest);
+    int DEFAULT_SERIALIZER = CommonSerializer.KRYO_SERIALIZER;
 
-    void setSerializer(CommonSerializer serializer);
+    Object sendRequest(RpcRequest rpcRequest);
 
 }

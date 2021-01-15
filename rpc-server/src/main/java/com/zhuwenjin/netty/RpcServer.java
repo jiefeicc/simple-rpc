@@ -38,13 +38,18 @@ public class RpcServer implements IRpcServer {
     private final IzkServiceRegistry izkserviceRegistry;
     private final ServiceProvider serviceProvider;
 
-    private CommonSerializer serializer;
+    private final CommonSerializer serializer;
 
     public RpcServer(String host, int port) {
+        this(host, port, DEFAULT_SERIALIZER);
+    }
+
+    public RpcServer(String host, int port, Integer serializer) {
         this.host = host;
         this.port = port;
         izkserviceRegistry = new ZkServiceRegistry();
         serviceProvider = new ServiceProviderImpl();
+        this.serializer = CommonSerializer.getByCode(serializer);
     }
 
     @Override
@@ -81,10 +86,6 @@ public class RpcServer implements IRpcServer {
         }
     }
 
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
-    }
 
     @Override
     public <T> void publishService(T service, Class<T> serviceClass) {

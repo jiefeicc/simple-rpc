@@ -8,10 +8,10 @@ import com.zhuwenjin.serializer.CommonSerializer;
  * @author ziyang
  */
 public interface IRpcServer {
+    int DEFAULT_SERIALIZER = CommonSerializer.KRYO_SERIALIZER;
 
     void start();
 
-    void setSerializer(CommonSerializer serializer);
 
     <T> void publishService(T service, Class<T> serviceClass);
 

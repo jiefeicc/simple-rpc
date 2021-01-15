@@ -2,7 +2,7 @@ package com.zhuwenjin;
 
 
 import com.zhuwenjin.netty.RpcClient;
-import com.zhuwenjin.serializer.ProtobufSerializer;
+import com.zhuwenjin.serializer.CommonSerializer;
 
 /**
  * 测试用Netty消费者
@@ -12,8 +12,7 @@ import com.zhuwenjin.serializer.ProtobufSerializer;
 public class TestClient {
 
     public static void main(String[] args) {
-        RpcClient client = new RpcClient();
-        client.setSerializer(new ProtobufSerializer());
+        IRpcClient client = new RpcClient(CommonSerializer.PROTOBUF_SERIALIZER);
         RpcClientProxy rpcClientProxy = new RpcClientProxy(client);
         HelloService helloService = rpcClientProxy.getProxy(HelloService.class);
         HelloObject object = new HelloObject(12, "This is a message");

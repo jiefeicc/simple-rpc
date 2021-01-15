@@ -43,7 +43,12 @@ public class RpcClient implements IRpcClient {
     }
 
     public RpcClient() {
+        this(DEFAULT_SERIALIZER);
+    }
+
+    public RpcClient(Integer serializer) {
         this.izkserviceDiscovery = new ZkServiceDiscovery();
+        this.serializer = CommonSerializer.getByCode(serializer);
     }
 
     @Override
@@ -78,9 +83,5 @@ public class RpcClient implements IRpcClient {
         return result.get();
     }
 
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
-    }
 
 }
