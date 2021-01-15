@@ -7,6 +7,8 @@ import com.zhuwenjin.entity.RpcRequest;
 import com.zhuwenjin.entity.RpcResponse;
 import com.zhuwenjin.enumeration.RpcError;
 import com.zhuwenjin.exception.RpcException;
+import com.zhuwenjin.loadbalancer.LoadBalancer;
+import com.zhuwenjin.loadbalancer.RandomLoadBalancer;
 import com.zhuwenjin.serializer.CommonSerializer;
 import com.zhuwenjin.util.RpcMessageChecker;
 import io.netty.bootstrap.Bootstrap;
@@ -32,7 +34,7 @@ public class RpcClient implements IRpcClient {
     private static final Bootstrap bootstrap;
     private final IzkServiceDiscovery izkserviceDiscovery;
 
-    private CommonSerializer serializer;
+    private final CommonSerializer serializer;
 
     static {
         EventLoopGroup group = new NioEventLoopGroup();
@@ -43,11 +45,16 @@ public class RpcClient implements IRpcClient {
     }
 
     public RpcClient() {
-        this(DEFAULT_SERIALIZER);
+        this(DEFAULT_SERIALIZER, new RandomLoadBalancer());
     }
-
+    public RpcClient(LoadBalancer loadBalancer) {
+        this(DEFAULT_SERIALIZER, loadBalancer);
+    }
     public RpcClient(Integer serializer) {
-        this.izkserviceDiscovery = new ZkServiceDiscovery();
+        this(serializer, new RandomLoadBalancer());
+    }
+    public RpcClient(Integer serializer, LoadBalancer loadBalancer) {
+        this.izkserviceDiscovery = new ZkServiceDiscovery(loadBalancer);
         this.serializer = CommonSerializer.getByCode(serializer);
     }
 

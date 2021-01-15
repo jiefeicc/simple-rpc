@@ -2,6 +2,8 @@ package com.zhuwenjin.discovery;
 
 import com.zhuwenjin.enumeration.RpcError;
 import com.zhuwenjin.exception.RpcException;
+import com.zhuwenjin.loadbalancer.LoadBalancer;
+import com.zhuwenjin.loadbalancer.RandomLoadBalancer;
 import com.zhuwenjin.util.CuratorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
@@ -18,7 +20,11 @@ import java.util.List;
 @Slf4j
 public class ZkServiceDiscovery implements IzkServiceDiscovery {
 
-    public ZkServiceDiscovery() {
+    private final LoadBalancer loadBalancer;
+
+    public ZkServiceDiscovery(LoadBalancer loadBalancer) {
+        if(loadBalancer == null) this.loadBalancer = new RandomLoadBalancer();
+        else this.loadBalancer = loadBalancer;
     }
 
     @Override
