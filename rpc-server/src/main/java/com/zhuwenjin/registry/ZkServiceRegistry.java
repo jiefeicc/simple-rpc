@@ -20,6 +20,6 @@ public class ZkServiceRegistry implements IzkServiceRegistry {
         String servicePath = CuratorUtils.ZK_REGISTER_ROOT_PATH + "/" + rpcServiceName + inetSocketAddress.toString();
         CuratorFramework zkClient = CuratorUtils.getZkClient();
         CuratorUtils.createPersistentNode(zkClient, servicePath);
-        System.out.println("向zk注冊服务");
+        System.out.println("向zk注冊服务:"+servicePath);
     }
 }

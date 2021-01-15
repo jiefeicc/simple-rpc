@@ -71,7 +71,8 @@ public class RpcClient implements IRpcClient {
             if(channel.isActive()) {
                 channel.writeAndFlush(rpcRequest).addListener(future1 -> {
                     if (future1.isSuccess()) {
-                        logger.info(String.format("客户端发送消息: %s", rpcRequest.toString()));
+                        System.out.println("客户端发送消息:"+rpcRequest.toString());
+                        logger.info(String.format("客户端发送消息:", rpcRequest.toString()));
                     } else {
                         logger.error("发送消息时有错误发生: ", future1.cause());
                     }
@@ -80,6 +81,7 @@ public class RpcClient implements IRpcClient {
                 AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse" + rpcRequest.getRequestId());
                 RpcResponse rpcResponse = channel.attr(key).get();
                 RpcMessageChecker.check(rpcRequest, rpcResponse);
+                System.out.println("客户端收到回复:"+rpcResponse);
                 result.set(rpcResponse.getData());
             } else {
                 System.exit(0);

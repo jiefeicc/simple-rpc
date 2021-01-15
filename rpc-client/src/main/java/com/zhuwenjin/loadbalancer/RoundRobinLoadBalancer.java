@@ -12,11 +12,11 @@ public class RoundRobinLoadBalancer implements LoadBalancer {
     private int index = 0;
 
     @Override
-    public Instance select(List<Instance> instances) {
-        if(index >= instances.size()) {
-            index %= instances.size();
+    public String select(List<String> serviceUrlList) {
+        if(index >= serviceUrlList.size()) {
+            index %= serviceUrlList.size();
         }
-        return instances.get(index++);
+        return serviceUrlList.get(index++);
     }
 
 }
