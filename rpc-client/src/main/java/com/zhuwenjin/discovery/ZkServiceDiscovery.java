@@ -35,7 +35,7 @@ public class ZkServiceDiscovery implements IzkServiceDiscovery {
             throw new RpcException(RpcError.SERVICE_CAN_NOT_BE_FOUND, rpcServiceName);
         }
         // load balancing
-        String targetServiceUrl = loadBalancer.select(serviceUrlList);
+        String targetServiceUrl = loadBalancer.select(rpcServiceName,serviceUrlList);
         log.info("Successfully found the service address:[{}]", targetServiceUrl);
         String[] socketAddressArray = targetServiceUrl.split(":");
         String host = socketAddressArray[0];

@@ -1,5 +1,6 @@
 package com.zhuwenjin;
 
+import com.zhuwenjin.annotation.ServiceScan;
 import com.zhuwenjin.netty.RpcServer;
 import com.zhuwenjin.serializer.CommonSerializer;
 
@@ -9,12 +10,12 @@ import com.zhuwenjin.serializer.CommonSerializer;
  *
  * @author zhuwenjin
  */
+@ServiceScan
 public class TestServer {
 
     public static void main(String[] args) {
-        HelloService helloService = new HelloServiceImpl();
         RpcServer server = new RpcServer("127.0.0.1", 9999, CommonSerializer.PROTOBUF_SERIALIZER);
-        server.publishService(helloService, HelloService.class);
+        server.start();
     }
 
 }

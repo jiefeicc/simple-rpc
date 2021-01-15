@@ -1,0 +1,16 @@
+package com.zhuwenjin;
+
+
+import com.zhuwenjin.annotation.Service;
+
+/**
+ * @author ziyang
+ */
+@Service
+public class ByeServiceImpl implements ByeService {
+
+    @Override
+    public String bye(String name) {
+        return "bye, " + name;
+    }
+}

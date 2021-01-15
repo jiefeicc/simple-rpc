@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface LoadBalancer {
 
-    String select(List<String> serviceUrlList);
+    String select(String rpcServiceName , List<String> serviceUrlList);
 
 }

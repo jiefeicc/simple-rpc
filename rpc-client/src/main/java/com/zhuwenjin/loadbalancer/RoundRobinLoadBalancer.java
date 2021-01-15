@@ -12,11 +12,13 @@ public class RoundRobinLoadBalancer implements LoadBalancer {
     private int index = 0;
 
     @Override
-    public String select(List<String> serviceUrlList) {
+    public String select(String rpcServiceName ,List<String> serviceUrlList) {
         if(index >= serviceUrlList.size()) {
             index %= serviceUrlList.size();
         }
-        return serviceUrlList.get(index++);
+        String targetServiceUrl = serviceUrlList.get(index++);
+        System.out.println("使用轮询负载均衡算法获得服务（"+rpcServiceName+"）的地址："+targetServiceUrl);
+        return targetServiceUrl;
     }
 
 }

@@ -11,9 +11,9 @@ import java.util.Random;
 public class RandomLoadBalancer implements LoadBalancer {
 
     @Override
-    public String select(List<String> serviceUrlList) {
+    public String select(String rpcServiceName , List<String> serviceUrlList) {
         String targetServiceUrl = serviceUrlList.get(new Random().nextInt(serviceUrlList.size()));
-        System.out.println("使用随即负载均衡算法获得服务地址："+targetServiceUrl);
+        System.out.println("使用随机负载均衡算法获得服务（"+rpcServiceName+"）的地址："+targetServiceUrl);
         return targetServiceUrl;
     }
 
