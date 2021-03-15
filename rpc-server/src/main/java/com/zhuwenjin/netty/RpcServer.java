@@ -39,6 +39,7 @@ public class RpcServer extends AbstractRpcServer {
         izkserviceRegistry = new ZkServiceRegistry();
         serviceProvider = new ServiceProviderImpl();
         this.serializer = CommonSerializer.getByCode(serializer);
+        //扫描服务并向zookeeper注册服务
         scanServices();
     }
 

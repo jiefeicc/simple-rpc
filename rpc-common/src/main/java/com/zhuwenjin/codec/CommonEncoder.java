@@ -15,6 +15,15 @@ import io.netty.handler.codec.MessageToByteEncoder;
  */
 public class CommonEncoder extends MessageToByteEncoder {
 
+//            +---------------+---------------+-----------------+-------------+
+//            |  Magic Number |  Package Type | Serializer Type | Data Length |
+//            |    4 bytes    |    4 bytes    |     4 bytes     |   4 bytes   |
+//            +---------------+---------------+-----------------+-------------+
+//            |                          Data Bytes                           |
+//            |                   Length: ${Data Length}                      |
+//            +---------------------------------------------------------------+
+
+
     private static final int MAGIC_NUMBER = 0xCAFEBABE;
 
     private final CommonSerializer serializer;

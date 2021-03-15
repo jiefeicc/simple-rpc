@@ -20,6 +20,8 @@ import java.util.List;
 @Slf4j
 public class ZkServiceDiscovery implements IzkServiceDiscovery {
 
+
+
     private final LoadBalancer loadBalancer;
 
     public ZkServiceDiscovery(LoadBalancer loadBalancer) {
@@ -29,8 +31,7 @@ public class ZkServiceDiscovery implements IzkServiceDiscovery {
 
     @Override
     public InetSocketAddress lookupService(String rpcServiceName) {
-        CuratorFramework zkClient = CuratorUtils.getZkClient();
-        List<String> serviceUrlList = CuratorUtils.getChildrenNodes(zkClient, rpcServiceName);
+        List<String> serviceUrlList = CuratorUtils.getChildrenNodes(rpcServiceName);
         if (serviceUrlList == null || serviceUrlList.size() == 0) {
             throw new RpcException(RpcError.SERVICE_CAN_NOT_BE_FOUND, rpcServiceName);
         }

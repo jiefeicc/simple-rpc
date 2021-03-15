@@ -2,7 +2,7 @@ package com.zhuwenjin.registry;
 
 import com.zhuwenjin.util.CuratorUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.curator.framework.CuratorFramework;
+
 
 import java.net.InetSocketAddress;
 
@@ -14,12 +14,16 @@ import java.net.InetSocketAddress;
  */
 @Slf4j
 public class ZkServiceRegistry implements IzkServiceRegistry {
+    //baseSleepTimeMs：重试之间等待的初始时间 maxRetries ：最大重试次数
+    private static final int BASE_SLEEP_TIME = 1000;
+    private static final int MAX_RETRIES = 3;
+
+    // Retry strategy. Retry 3 times, and will increase the sleep time between retries.
 
     @Override
     public void registerService(String rpcServiceName, InetSocketAddress inetSocketAddress) {
         String servicePath = CuratorUtils.ZK_REGISTER_ROOT_PATH + "/" + rpcServiceName + inetSocketAddress.toString();
-        CuratorFramework zkClient = CuratorUtils.getZkClient();
-        CuratorUtils.createPersistentNode(zkClient, servicePath);
+        CuratorUtils.createPersistentNode(servicePath);
         System.out.println("向zk注冊服务（"+servicePath+"）");
     }
 }

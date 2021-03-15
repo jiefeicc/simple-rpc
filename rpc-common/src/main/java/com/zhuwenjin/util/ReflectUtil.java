@@ -13,6 +13,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
+ * 扫描包里面的类，将其 Class 对象放入一个 Set 中返回。
  * @author ziyang
  */
 public class ReflectUtil {
@@ -22,6 +23,11 @@ public class ReflectUtil {
         return stack[stack.length - 1].getClassName();
     }
 
+    /**
+     * 传入一个包名，用于扫描该包及其子包下所有的类，并将其 Class 对象放入一个 Set 中返回。
+     * @param packageName
+     * @return
+     */
     public static Set<Class<?>> getClasses(String packageName) {
         Set<Class<?>> classes = new LinkedHashSet<>();
         boolean recursive = true;
