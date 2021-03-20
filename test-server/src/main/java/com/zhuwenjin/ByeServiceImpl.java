@@ -4,7 +4,7 @@ package com.zhuwenjin;
 import com.zhuwenjin.annotation.Service;
 
 /**
- * @author ziyang
+ * @author zhuwenjin
  */
 @Service
 public class ByeServiceImpl implements ByeService {

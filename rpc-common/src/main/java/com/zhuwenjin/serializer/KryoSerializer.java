@@ -17,7 +17,7 @@ import java.io.ByteArrayOutputStream;
 /**
  * Kryo序列化器
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class KryoSerializer implements CommonSerializer {
 

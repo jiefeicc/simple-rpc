@@ -6,7 +6,7 @@ import com.zhuwenjin.serializer.CommonSerializer;
 /**
  * 客户端类通用接口
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public interface IRpcClient {
 

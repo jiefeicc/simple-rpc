@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 用于获取 Channel 对象
- * @author ziyang
+ * @author zhuwenjin
  */
 public class ChannelProvider {
 
@@ -58,6 +58,7 @@ public class ChannelProvider {
     }
 
     private static void connect(Bootstrap bootstrap, InetSocketAddress inetSocketAddress, int retry, CountDownLatch countDownLatch) {
+        //客户端连接服务端,绑定远程主机和端口
         bootstrap.connect(inetSocketAddress).addListener((ChannelFutureListener) future -> {
             if (future.isSuccess()) {
                 logger.info("客户端连接成功!");

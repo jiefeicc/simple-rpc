@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * 基于Hessian协议的序列化器
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class HessianSerializer implements CommonSerializer {
 

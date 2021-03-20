@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 使用ProtoBuf的序列化器
- * @author ziyang
+ * @author zhuwenjin
  */
 public class ProtobufSerializer implements CommonSerializer {
 

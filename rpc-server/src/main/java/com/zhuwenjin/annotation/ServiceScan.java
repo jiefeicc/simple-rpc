@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 服务扫描的基包
- * @author ziyang
+ * @author zhuwenjin
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * NIO方式消费侧客户端类
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class RpcClient implements IRpcClient {
 

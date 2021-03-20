@@ -5,7 +5,7 @@ import com.zhuwenjin.serializer.CommonSerializer;
 /**
  * 服务器类通用接口
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public interface IRpcServer {
     int DEFAULT_SERIALIZER = CommonSerializer.KRYO_SERIALIZER;

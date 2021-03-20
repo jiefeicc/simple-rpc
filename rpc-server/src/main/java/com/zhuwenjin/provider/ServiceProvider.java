@@ -2,7 +2,7 @@ package com.zhuwenjin.provider;
 
 /**
  * 保存和提供服务实例对象
- * @author ziyang
+ * @author zhuwenjin
  */
 public interface ServiceProvider {
 

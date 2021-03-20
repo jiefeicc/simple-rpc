@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * NIO方式服务提供侧
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class RpcServer extends AbstractRpcServer {
     private final CommonSerializer serializer;
@@ -45,13 +45,21 @@ public class RpcServer extends AbstractRpcServer {
 
     @Override
     public void start() {
+        //默认起的线程数为：cpu核心数*2
+        //一个线程对应一个NioEventLoop
+
+        //bossGroup用于接受连接，workerGroup用于具体的处理
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
-
+            //启动引导、辅助类
             ServerBootstrap serverBootstrap = new ServerBootstrap();
+            //给引导类配置线程组，确认线程模型
             serverBootstrap.group(bossGroup, workerGroup)
+                    //指定IO模型:
+                    // (处理accept事件,与client建立连接,生成NioScocketChannel,并将其注册到某个worker NIOEventLoop上的selector)
                     .channel(NioServerSocketChannel.class)
+                    //打印日志
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .option(ChannelOption.SO_BACKLOG, 256)
                     .option(ChannelOption.SO_KEEPALIVE, true)
@@ -66,12 +74,14 @@ public class RpcServer extends AbstractRpcServer {
                                     .addLast(new RpcServerHandler());
                         }
                     });
+            //绑定本地端口，等待客户端的连接
             ChannelFuture future = serverBootstrap.bind(host, port).sync();
             ShutdownHook.getShutdownHook().addClearAllHook(new InetSocketAddress(host,port));
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             logger.error("启动服务器时有错误发生: ", e);
         } finally {
+            //关闭线程资源
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

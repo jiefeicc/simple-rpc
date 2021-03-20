@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 默认的服务注册表，保存服务端本地服务
  * 服务器收到客户端发的消息，知道将要使用哪个对象，就通过本地服务注册表获取到（未实例化）
- * @author ziyang
+ * @author zhuwenjin
  */
 public class ServiceProviderImpl implements ServiceProvider {
 

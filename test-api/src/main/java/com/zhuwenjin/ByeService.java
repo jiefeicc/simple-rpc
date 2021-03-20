@@ -1,7 +1,7 @@
 package com.zhuwenjin;
 
 /**
- * @author ziyang
+ * @author zhuwenjin
  */
 public interface ByeService {
 
