@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 消费者向提供者发送的请求对象
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 @Data
 @NoArgsConstructor

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Netty中处理RpcRequest的Handler
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 

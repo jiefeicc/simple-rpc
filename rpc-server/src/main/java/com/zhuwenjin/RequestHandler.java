@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 /**
  * 进行过程调用的处理器(反射处理)
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class RequestHandler {
 

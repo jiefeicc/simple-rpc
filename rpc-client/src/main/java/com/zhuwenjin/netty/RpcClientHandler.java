@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Netty客户端侧处理器
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
 

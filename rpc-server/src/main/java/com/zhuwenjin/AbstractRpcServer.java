@@ -15,7 +15,7 @@ import java.net.InetSocketAddress;
 import java.util.Set;
 
 /**
- * @author ziyang
+ * @author zhuwenjin
  */
 public abstract class AbstractRpcServer implements IRpcServer {
 
@@ -27,6 +27,14 @@ public abstract class AbstractRpcServer implements IRpcServer {
     protected IzkServiceRegistry izkserviceRegistry;
     protected ServiceProvider serviceProvider;
 
+    // 我们首先需要获得要扫描的包的范围，就需要获取到 ServiceScan 注解的值，而我们前面说过，这个注解是加在启动类上的，
+    // 那么，我们怎么知道启动类是哪一个呢？答案是通过调用栈。
+    // 方法的调用和返回是通过方法调用栈来实现的，当调用一个方法时，该方法入栈，该方法返回时，该方法出站，控制回到栈顶的方法。
+    // 那么，main 方法一定位于调用栈的最底端，在 ReflectUtils 中，我写了一个 getStackTrace 方法（名字起得不好），
+    // 用于获取 main 所在的类。通过 Class 对象的 isAnnotationPresent 方法来判断该类是否有 ServiceScan 注解。
+    // 如果有，通过startClass.getAnnotation(ServiceScan.class).value(); 获取注解的值。
+    // 当获得扫描的范围后，就可以通过ReflectUtil.getClasses(basePackage) 获取到所有的 Class 了，
+    // 逐个判断是否有 Service 注解，如果有的话，通过反射创建该对象，并且调用 publishService 注册即可。
     public void scanServices() {
         String mainClassName = ReflectUtil.getStackTrace();
         Class<?> startClass;

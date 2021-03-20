@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * RPC客户端动态代理
  *
- * @author ziyang
+ * @author zhuwenjin
  */
 public class RpcClientProxy implements InvocationHandler {
 
